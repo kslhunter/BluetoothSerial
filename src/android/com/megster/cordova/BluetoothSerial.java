@@ -49,6 +49,7 @@ public class BluetoothSerial extends CordovaPlugin {
     private static final String SETTINGS = "showBluetoothSettings";
     private static final String ENABLE = "enable";
     private static final String DISCOVER_UNPAIRED = "discoverUnpaired";
+    private static final String STOP_DISCOVER_UNPAIRED = "stopDiscoverUnpaired";
     private static final String SET_DEVICE_DISCOVERED_LISTENER = "setDeviceDiscoveredListener";
     private static final String CLEAR_DEVICE_DISCOVERED_LISTENER = "clearDeviceDiscoveredListener";
     private static final String SET_NAME = "setName";
@@ -219,7 +220,11 @@ public class BluetoothSerial extends CordovaPlugin {
                 permissionCallback = callbackContext;
                 cordova.requestPermission(this, CHECK_PERMISSIONS_REQ_CODE, ACCESS_COARSE_LOCATION);
             }
+            
+        } else if (action.equals(STOP_DISCOVER_UNPAIRED)) {
 
+            stopDiscoverUnpairedDevices(callbackContext);
+            
         } else if (action.equals(SET_DEVICE_DISCOVERED_LISTENER)) {
 
             this.deviceDiscoveredCallback = callbackContext;
@@ -323,6 +328,11 @@ public class BluetoothSerial extends CordovaPlugin {
         activity.registerReceiver(discoverReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
         activity.registerReceiver(discoverReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
         bluetoothAdapter.startDiscovery();
+    }
+    
+    private void stopDiscoverUnpairedDevices(final CallbackContext callbackContext) throws JSONException {
+        callbackContext.success();
+        bluetoothAdapter.cancelDiscovery();
     }
 
     private JSONObject deviceToJSON(BluetoothDevice device) throws JSONException {
