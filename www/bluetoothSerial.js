@@ -111,7 +111,11 @@ module.exports = {
     discoverUnpaired: function (success, failure) {
         cordova.exec(success, failure, "BluetoothSerial", "discoverUnpaired", []);
     },
-
+    
+    stopDiscoverUnpaired: function (success, failure) {
+        cordova.exec(success, failure, "BluetoothSerial", "stopDiscoverUnpaired", []);
+    },
+    
     setDeviceDiscoveredListener: function (notify) {
         if (typeof notify != 'function')
             throw 'BluetoothSerial.setDeviceDiscoveredListener: Callback not a function';
