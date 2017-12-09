@@ -331,8 +331,8 @@ public class BluetoothSerial extends CordovaPlugin {
     }
     
     private void stopDiscoverUnpairedDevices(final CallbackContext callbackContext) throws JSONException {
-        callbackContext.success();
         bluetoothAdapter.cancelDiscovery();
+        callbackContext.success();
     }
 
     private JSONObject deviceToJSON(BluetoothDevice device) throws JSONException {
